@@ -38,13 +38,9 @@ public class StringCalculatorTest {
         assertEquals(0, StringCalculator.add("//;\n"));
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void throwsExceptionForNegativeNumbers() throws Exception {
-        try {
-            StringCalculator.add("1,2,-3");
-            fail("Should never reach this line!");
-        } catch (Exception e) {
-        }
+        StringCalculator.add("1,2,-3");
     }
 
     @Rule
@@ -53,9 +49,17 @@ public class StringCalculatorTest {
     @Test
     public void throwsExceptionForNegativeNumbersWithProperMessage() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("negatives not allowed: -3");
+        expectedException.expectMessage("negatives not allowed: [-3]");
 
         StringCalculator.add("1,2,-3");
+    }
+
+    @Test
+    public void throwsExceptionForNegativeNumbersWithMessageShowingAllTheInvalidNumbers() throws Exception {
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("negatives not allowed: [-3, -23]");
+
+        StringCalculator.add("1,2,-3,5,-23");
     }
 
 }

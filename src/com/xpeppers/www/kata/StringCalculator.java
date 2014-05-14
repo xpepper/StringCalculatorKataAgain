@@ -1,5 +1,7 @@
 package com.xpeppers.www.kata;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,19 +29,19 @@ public class StringCalculator {
     }
 
     private static int sum(String[] numbers) throws Exception {
+        List<Integer> negativeNumbers = new ArrayList<Integer>();
         int sum = 0;
         for (String eachNumber : numbers) {
             int eachInteger = Integer.parseInt(eachNumber);
-            raiseExceptionForNegativeNumber(eachInteger);
+            if (eachInteger < 0) {
+                negativeNumbers .add(eachInteger);
+            }
             sum += eachInteger;
         }
+        if (!negativeNumbers.isEmpty())
+            throw new Exception("negatives not allowed: " + negativeNumbers);
 
         return sum;
-    }
-
-    private static void raiseExceptionForNegativeNumber(int integer) throws Exception {
-        if (integer < 0)
-            throw new Exception("negatives not allowed: " + integer);
     }
 
     private static Matcher match(String stringOfNumbers, String regex) {
