@@ -12,9 +12,6 @@ public class StringCalculator {
     }
 
     private static String[] extractNumbersFrom(String stringOfNumbers) {
-        if (stringOfNumbers.isEmpty())
-            return new String[0];
-
         String delimitersRegexp = ",|\n";
 
         Matcher matcher = match(stringOfNumbers, "//(.+)\n(.*)");
@@ -22,6 +19,9 @@ public class StringCalculator {
             delimitersRegexp = matcher.group(1);
             stringOfNumbers = matcher.group(2);
         }
+
+        if (stringOfNumbers.isEmpty())
+            return new String[0];
 
         return stringOfNumbers.split(delimitersRegexp);
     }

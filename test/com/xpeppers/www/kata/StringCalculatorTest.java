@@ -31,4 +31,8 @@ public class StringCalculatorTest {
         assertEquals(3, StringCalculator.add("//;\n1;2"));
     }
 
+    @Test
+    public void stringWithCustomerDelimiterAndNoNumersAddsToZero() throws Exception {
+        assertEquals(0, StringCalculator.add("//;\n"));
+    }
 }
