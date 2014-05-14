@@ -22,8 +22,13 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void newlineIsAnAllowedNumberSeparator() throws Exception {
+    public void newlineIsAnAllowedNumberDelimiter() throws Exception {
         assertEquals(6, StringCalculator.add("1,2\n3"));
+    }
+
+    @Test
+    public void supportsCustomDelimiters() throws Exception {
+        assertEquals(3, StringCalculator.add("//;\n1;2"));
     }
 
 }
