@@ -38,10 +38,14 @@ public class StringCalculator {
             }
             sum += eachInteger;
         }
-        if (!negativeNumbers.isEmpty())
-            throw new Exception("negatives not allowed: " + negativeNumbers);
+        raiseErrorForNegativeNumbers(negativeNumbers);
 
         return sum;
+    }
+
+    private static void raiseErrorForNegativeNumbers(List<Integer> negativeNumbers) throws Exception {
+        if (!negativeNumbers.isEmpty())
+            throw new Exception("negatives not allowed: " + negativeNumbers);
     }
 
     private static Matcher match(String stringOfNumbers, String regex) {
