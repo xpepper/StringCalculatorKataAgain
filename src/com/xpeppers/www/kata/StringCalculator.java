@@ -1,30 +1,43 @@
 package com.xpeppers.www.kata;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringCalculator {
 
     public static int add(String stringOfNumbers) {
-        if (stringOfNumbers.isEmpty())
-            return 0;
+        String[] numbers = extractNumbersFrom(stringOfNumbers);
 
-        String[] split = null;
-        String customDelimiter = null;
-        if (stringOfNumbers.startsWith("//")) {
-            split = stringOfNumbers.split("\n", 2);
-            customDelimiter = split[0].substring(2, split[0].length());
-            stringOfNumbers = split[1];
+        return sum(numbers);
+    }
+
+    private static String[] extractNumbersFrom(String stringOfNumbers) {
+        if (stringOfNumbers.isEmpty())
+            return new String[0];
+
+        String delimitersRegexp = ",|\n";
+
+        Matcher matcher = match(stringOfNumbers, "//(.+)\n(.*)");
+        if (matcher.matches()) {
+            delimitersRegexp = matcher.group(1);
+            stringOfNumbers = matcher.group(2);
         }
 
-        String defaultDelimiters = ",|\n";
-        if (customDelimiter != null)
-            defaultDelimiters = customDelimiter;
-        String[] numbers = stringOfNumbers.split(defaultDelimiters);
+        return stringOfNumbers.split(delimitersRegexp);
+    }
 
+    private static int sum(String[] numbers) {
         int sum = 0;
         for (String eachNumber : numbers) {
             sum += Integer.parseInt(eachNumber);
         }
 
         return sum;
+    }
+
+    private static Matcher match(String stringOfNumbers, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(stringOfNumbers);
     }
 
 }
